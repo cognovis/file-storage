@@ -14,7 +14,6 @@ ad_page_contract {
     {title ""}
     {lock_title_p 0}
     {name ""}
-
 } -properties {
     folder_id:onevalue
     context:onevalue
@@ -37,6 +36,18 @@ ad_page_contract {
 	    ad_complain "Your file is larger than the maximum file size allowed on this system ([util_commify_number $max_bytes] bytes)"
 	}
     }
+}
+
+
+if {[info exists file_id]} {
+    callback file_storage_file_add_redirect -object_id $file_id \
+        -status_id "" -type_id "" -file_id $file_id \
+        -folder_id $folder_id -return_url [im_opt_val return_url]
+} else {
+    callback file_storage_file_add_redirect -object_id "" \
+        -status_id "" -type_id "" -file_id "" \
+        -folder_id $folder_id -return_url [im_opt_val return_url]
+    
 }
 
 set user_id [ad_conn user_id]
